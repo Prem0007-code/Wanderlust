@@ -1,0 +1,53 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h3>Create a New Listing</h3>
+      <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+        
+        <div class="mb-3">
+          <label for="title" class="form-label">Enter Title</label>
+          <input name="listing[title]" class="form-control" placeholder="Enter your title" required />
+          <div class="valid-feedback">Title looks good</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Enter Description</label>
+          <textarea name="listing[description]" class="form-control" placeholder="Enter description" required></textarea>
+          <div class="invalid-feedback">Please provide a short description</div>
+        </div>
+
+        <!-- Fix the image input -->
+        >  
+        
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Image</label>
+          <input name="listing[image]"  type="file" class="form-control" >  
+      </div>
+        
+  
+
+        <div class="mb-3">
+          <label for="price" class="form-label">Enter Price</label>
+          <input name="listing[price]" type="number" class="form-control" placeholder="Enter price" required />
+          <div class="invalid-feedback">Price must be valid</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="country" class="form-label">Enter Country</label>
+          <input name="listing[country]" class="form-control" placeholder="Enter country" required />
+          <div class="invalid-feedback">Country is required</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Enter Location</label>
+          <input name="listing[location]" class="form-control" placeholder="Enter location" required />
+          <div class="invalid-feedback">Location is required</div>
+        </div>
+
+        <button class="btn btn-dark">Add Listing</button>
+      </form>
+    </div>
+  </div>
+</div>
