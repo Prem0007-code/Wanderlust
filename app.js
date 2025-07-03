@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 // Session config
 const sessionOptions = {
-    secret: "mysupersecretstring",
+    secret: "radheradhe",
     resave: false,
     saveUninitialized: true,
     cookie: {
