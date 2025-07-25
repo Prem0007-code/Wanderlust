@@ -13,6 +13,7 @@ const ejsMate = require("ejs-mate");
 
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -21,10 +22,11 @@ const User = require("./models/user.js");
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 const user = require("./routes/user.js");
+const dburl = process.env.DB_URL;
 
 // Connect to MongoDB
 async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
+    await mongoose.connect(dburl);
     console.log("Connected to database");
 };
 
@@ -47,18 +49,32 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
 // Session config
+const store = MongoStore.create({
+    mongoUrl: dburl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter: 24*3600,
+ });
+  store.on("error",()=>{
+    console.log(" Error in MONGO SESSION",err);
+  });
+
 const sessionOptions = {
-    secret: "radheradhe",
+    store: store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly :true,
     },
 };
 // app.get("/", (req, res) => {
 //     res.send("Hi, I am root");
 // });
+ 
 
 app.use(session(sessionOptions));
 app.use(flash());
